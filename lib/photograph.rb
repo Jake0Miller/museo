@@ -5,6 +5,6 @@ class Photograph
     @id = info[:id]
     @name = info[:name]
     @artist_id = info[:artist_id]
-    @year = info[:year]
+    @year = info[:year].to_i
   end
 end

@@ -137,14 +137,18 @@ class CuratorTest < Minitest::Test
     @curator.load_photographs('./data/photographs.csv')
     @curator.load_artists('./data/artists.csv')
 
+    expected = [@curator.find_photograph_by_id("1"),
+                @curator.find_photograph_by_id("4")]
     actual = @curator.photographs_taken_between(1950..1965)
+    assert_equal expected, actual
   end
 
   def test_artist_photos_by_age
     @curator.load_photographs('./data/photographs.csv')
     @curator.load_artists('./data/artists.csv')
-    diane_arbus = curator.find_artist_by_id("3")
+    diane_arbus = @curator.find_artist_by_id("3")
 
     actual = @curator.artists_photographs_by_age(diane_arbus)
+    assert_equal 0, actual
   end
 end

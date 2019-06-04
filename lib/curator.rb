@@ -51,6 +51,7 @@ class Curator
   end
 
   def photographs_taken_between(range)
+    #require 'pry';binding.pry
     @photographs.find_all {|photo| range.include?(photo.year)}
   end
 
