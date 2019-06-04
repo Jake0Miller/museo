@@ -96,4 +96,32 @@ class CuratorTest < Minitest::Test
     actual = @curator.find_photographs_by_artist(diane_arbus)
     assert_equal [@photo_3, @photo_4], actual
   end
+
+  def test_artists_with_multiple_photographs
+    @curator.add_photograph(@photo_1)
+    @curator.add_photograph(@photo_2)
+    @curator.add_photograph(@photo_3)
+    @curator.add_photograph(@photo_4)
+    @curator.add_artist(@artist_1)
+    @curator.add_artist(@artist_2)
+    @curator.add_artist(@artist_3)
+
+    assert_equal [@artist_3], @curator.artists_with_multiple_photographs
+    assert_equal 1, @curator.artists_with_multiple_photographs.length
+  end
+
+  def test_photographs_taken_by_artist_from
+    @curator.add_photograph(@photo_1)
+    @curator.add_photograph(@photo_2)
+    @curator.add_photograph(@photo_3)
+    @curator.add_photograph(@photo_4)
+    @curator.add_artist(@artist_1)
+    @curator.add_artist(@artist_2)
+    @curator.add_artist(@artist_3)
+    
+    actual = @curator.photographs_taken_by_artist_from("United States")
+    assert_equal [@photo_2, @photo_3, @photo_4], actual
+    actual = @curator.photographs_taken_by_artist_from("Argentina")
+    assert_equal [], actual
+  end
 end

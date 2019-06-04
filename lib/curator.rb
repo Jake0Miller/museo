@@ -25,4 +25,14 @@ class Curator
   def find_photographs_by_artist(artist)
     @photographs.find_all {|photo| photo.artist_id == artist.id}
   end
+
+  def artists_with_multiple_photographs
+    @artists.find_all {|artist| find_photographs_by_artist(artist).length > 1}
+  end
+
+  def photographs_taken_by_artist_from(country)
+    @artists.each_with_object([]) do |artist,arr|
+      arr.push(*find_photographs_by_artist(artist)) if artist.country == country
+    end
+  end
 end
