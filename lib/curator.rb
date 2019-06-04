@@ -51,11 +51,12 @@ class Curator
   end
 
   def photographs_taken_between(range)
-    #require 'pry';binding.pry
     @photographs.find_all {|photo| range.include?(photo.year)}
   end
 
   def artists_photographs_by_age(artist)
-
+    find_photographs_by_artist(artist).each_with_object({}) do |photo,hash|
+      hash[photo.year-artist.born.to_i] = photo.name
+    end
   end
 end
