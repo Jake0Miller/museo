@@ -122,14 +122,16 @@ class CuratorTest < Minitest::Test
     @curator.add_artist(@artist_2)
     @curator.add_artist(@artist_3)
 
+    expected = [@curator.find_photograph_by_id("2"),
+                @curator.find_photograph_by_id("3"),
+                @curator.find_photograph_by_id("4")]
     actual = @curator.photographs_taken_by_artist_from("United States")
-    assert_equal [@photo_2, @photo_3, @photo_4], actual
+    assert_equal expected, actual
     actual = @curator.photographs_taken_by_artist_from("Argentina")
     assert_equal [], actual
   end
 
   def test_file_io
-    skip
     @curator.load_photographs('./data/photographs.csv')
     @curator.load_artists('./data/artists.csv')
 
@@ -138,7 +140,6 @@ class CuratorTest < Minitest::Test
   end
 
   def test_photos_taken_between
-    skip
     @curator.load_photographs('./data/photographs.csv')
     @curator.load_artists('./data/artists.csv')
 
@@ -149,7 +150,6 @@ class CuratorTest < Minitest::Test
   end
 
   def test_artist_photos_by_age
-    skip
     @curator.load_photographs('./data/photographs.csv')
     @curator.load_artists('./data/artists.csv')
     diane_arbus = @curator.find_artist_by_id("3")
