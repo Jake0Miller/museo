@@ -1,3 +1,5 @@
+require './lib/file_io'
+
 class Curator
   attr_reader :artists, :photographs
 
@@ -34,5 +36,25 @@ class Curator
     @artists.each_with_object([]) do |artist,arr|
       arr.push(*find_photographs_by_artist(artist)) if artist.country == country
     end
+  end
+
+  def load_photographs(file)
+    @photographs = FileIO.load_photographs(file).map do |hash|
+      Photograph.new(hash)
+    end
+  end
+
+  def load_artists(file)
+    @artists = FileIO.load_artists(file).map do |hash|
+      Artist.new(hash)
+    end
+  end
+
+  def photographs_taken_between(range)
+    @photographs.find_all {|photo| range.include?(photo.year)}
+  end
+
+  def artists_photographs_by_age(artist)
+
   end
 end

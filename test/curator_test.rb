@@ -118,10 +118,33 @@ class CuratorTest < Minitest::Test
     @curator.add_artist(@artist_1)
     @curator.add_artist(@artist_2)
     @curator.add_artist(@artist_3)
-    
+
     actual = @curator.photographs_taken_by_artist_from("United States")
     assert_equal [@photo_2, @photo_3, @photo_4], actual
     actual = @curator.photographs_taken_by_artist_from("Argentina")
     assert_equal [], actual
+  end
+
+  def test_file_io
+    @curator.load_photographs('./data/photographs.csv')
+    @curator.load_artists('./data/artists.csv')
+
+    assert_equal 6, @curator.artists.length
+    assert_equal 4, @curator.photographs.length
+  end
+
+  def test_photos_taken_between
+    @curator.load_photographs('./data/photographs.csv')
+    @curator.load_artists('./data/artists.csv')
+
+    actual = @curator.photographs_taken_between(1950..1965)
+  end
+
+  def test_artist_photos_by_age
+    @curator.load_photographs('./data/photographs.csv')
+    @curator.load_artists('./data/artists.csv')
+    diane_arbus = curator.find_artist_by_id("3")
+
+    actual = @curator.artists_photographs_by_age(diane_arbus)
   end
 end
