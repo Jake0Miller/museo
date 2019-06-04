@@ -9,11 +9,11 @@ class Curator
   end
 
   def add_photograph(photo)
-    @photographs << photo
+    @photographs << Photograph.new(photo)
   end
 
   def add_artist(artist)
-    @artists << artist
+    @artists << Artist.new(artist)
   end
 
   def find_photograph_by_id(id)
@@ -39,14 +39,14 @@ class Curator
   end
 
   def load_photographs(file)
-    @photographs = FileIO.load_photographs(file).map do |hash|
-      Photograph.new(hash)
+    FileIO.load_photographs(file).each do |photo|
+      add_photograph(photo)
     end
   end
 
   def load_artists(file)
-    @artists = FileIO.load_artists(file).map do |hash|
-      Artist.new(hash)
+    FileIO.load_artists(file).each do |artist|
+      add_artist(artist)
     end
   end
 
